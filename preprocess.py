@@ -15,7 +15,10 @@ def find_age_regex(d):
     return [i.strip() for i in l]
 def clean_item(d):
     d = d['age_list']
-    return [re.sub('[가의를인에로]+', '', i) for i in d]
+    data = [re.sub('[가의를인에로지]+', '', i) for i in d]
+    return [i+'지' for i in data if i[-1]=='까']\
+                +[i for i in data if i[-1]!='까'] \
+                    +[i[:-2] for i in data if i[-1]=='이'] + [i+'세' for i in data if i[-1].isdigit()]
 
 if __name__ == '__main__':
     files = glob('./data/*.csv')
